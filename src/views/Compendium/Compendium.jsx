@@ -19,51 +19,55 @@ export default function Compendium() {
 
   //TODO 😖 help!
   // if (pokemons.count !== 0) {
-  //   useEffect(() => {
-  //     const getPokemon = async () => {
-  //       const pokemonList = await fetchPokemon();
-  //        this.setState({pokemons: pokemonList});
-  //       setLoading(false);
-  //     };
-  //     getPokemon();
-  //   }, [pokemons]);
+    useEffect(() => {
+      const getPokemon = async () => {
+        const pokemonList = await fetchPokemon();
+        //  this.setState({pokemons: pokemonList});
+        setPokemons(pokemonList);
+        setLoading(false);
+      };
+      getPokemon();
+    }, []);
   // }
 
   //TODO 😖 help!
-  //   useEffect(async () => {
-  //      function getTypes() {
-  //       const pokemonTypes = fetchTypes();
-  //       setTypes(pokemonTypes);
-  //     }
-  //     getTypes();
-  //   }, []);
+    useEffect(() =>  {
+      async function getTypes() {
+        const pokemonTypes = await fetchTypes();
+        setTypes(pokemonTypes);
+        console.log(pokemonTypes)
+      }
+      getTypes();
+    }, []);
 
   //TODO 😖 help!
-  // useEffect(() => {
-  //   async function getFilteredPokemon() {
-  //     if (!selectedType) return;
-  //     setLoading(true);
+  useEffect(() => {
+    async function getFilteredPokemon() {
+      if (!selectedType) return;
+      setLoading(true);
 
-  //     if (selectedType !== 'all') {
-  //       const filteredPokemon = await fetchFilteredPokemon(selectedType);
-  //       setPokemons(filteredPokemon);
-  //     } else {
-  //       const pokemonList = await fetchPokemon();
-  //       this.setState({pokemons: pokemonList});
-  //     }
-  //     setLoading(false);
-  //     setSort('');
-  //   }
+      if (selectedType !== 'all') {
+        const filteredPokemon = await fetchFilteredPokemon(selectedType);
+        setPokemons(filteredPokemon);
+      } else {
+        const pokemonList = await fetchPokemon();
+        // this.setState({pokemons: pokemonList});
+        setPokemons(pokemonList);
+      }
+      setLoading(false);
+      // setSort('');
+    }
 
-  //   getFilteredPokemon();
-  // }, [selectedType]);
+    getFilteredPokemon();
+  }, [selectedType]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoading(true);
     fetchSearchPokemon(searchName)
       .then((searchedPokemons) => {
-        this.setState({pokemons: searchedPokemons});
+        // this.setState({pokemons: searchedPokemons});
+        setPokemons(searchedPokemons);
       })
       .catch((error) => {})
       .finally(() => {
@@ -96,4 +100,4 @@ export default function Compendium() {
       </main>
     </div>
   );
-}
+};
